@@ -12,8 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## SVAR oil to cpi
 
-With the purpose to verify or refute the proposed hypothesis, will be incorporated methods statistics to analysis of the economic series to complement with technical content to the empirical content of the economic theories that explain the phenomenon raised.
-For this, the use of a structural model of autoregressive vectors (sVAR) is proposed to analyze the behavior of inflation in Guatemala in the face of variations in the international prices of oil and its derivatives, given the importance that these have over all agents. from the final producers and consumers, to the way in which the state authorities formulate their economic policy.
+A structural autoregressive vector (sVAR) is proposed to analyze the responses of the inflation in Guatemala against shocks of the foreign oil prices and some derivatives, given the importance that these have over all local agents. From producers and consumers, to the way in which the state authorities formulate their monetary policy.
 
 ```{r library, include=FALSE}
 library(stargazer)
@@ -43,7 +42,7 @@ cpi_geo_y <- ts(VAR_geometric_data$inflation_yoy, start = c(2001,2), frequency =
 ## Visualize data 
 
 X axis: Time from 1M2001 to 12M2022
-Y axis: Data Percentage %
+Y axis: %
 
 ```{r, include = FALSE}
 
