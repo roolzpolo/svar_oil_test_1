@@ -6,13 +6,9 @@ output:
 date: "2023-01-19"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## SVAR oil to cpi
 
-A structural autoregressive vector (sVAR) is proposed to analyze the responses of the inflation in Guatemala against shocks of the foreign oil prices and some derivatives, given the importance that these have over all local agents. From producers and consumers, to the way in which the state authorities formulate their monetary policy.
+A structural autoregressive vector (sVAR) is proposed to analyze the responses of the inflation in Guatemala against shocks of the foreign oil prices and some derivatives, given the importance that these have over all local agents, from producers and consumers, to the way in which the state authorities formulate their monetary policy.
 
 ```{r library, include=FALSE}
 library(stargazer)
@@ -55,6 +51,7 @@ d <- ggplot(data = VAR_geometric_data)
 ```
 
 ### Least squares test for individual regressions CPI ~ OIL
+
 \begin{table}[!htbp] \centering 
   \caption{} 
   \label{} 
