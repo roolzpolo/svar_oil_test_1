@@ -3,7 +3,8 @@ rm(list = ls())
 ############  VECTOR AUTO-REGRESSION MODEL (VAR MODEL) ###################
 
 # LIBRARIES 
-
+install.packages("tinytex")
+library(xtable)
 library(MASS)
 library(strucchange)
 library(zoo)
@@ -56,7 +57,7 @@ OLS2 <- lm(cpi_geo_y ~ gas_geo_y)
 OLS3 <- lm(cpi_geo_y ~ oil_geo_y)
 OLS4 <- lm(oil_geo_y ~ gas_geo_y)
 
-
+stargazer(OLS1)
 plot(OLS1)
 par(mfrow=c(2,2))
 

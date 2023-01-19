@@ -1,5 +1,5 @@
 ---
-title: "svar oil"
+title: "**sVAR oil**"
 output:
   html_document: default
   pdf_document: default
@@ -16,6 +16,7 @@ With the purpose to verify or refute the proposed hypothesis, will be incorporat
 For this, the use of a structural model of autoregressive vectors (sVAR) is proposed to analyze the behavior of inflation in Guatemala in the face of variations in the international prices of oil and its derivatives, given the importance that these have over all agents. from the final producers and consumers, to the way in which the state authorities formulate their economic policy.
 
 ```{r library, include=FALSE}
+library(stargazer)
 library(MASS)
 library(strucchange)
 library(zoo)
@@ -39,61 +40,83 @@ gas_geo_y <- ts(VAR_geometric_data$gas_yoy, start = c(2001,2), frequency = 12)
 oil_geo_y <- ts(VAR_geometric_data$oil_yoy, start = c(2001,2), frequency = 12)
 cpi_geo_y <- ts(VAR_geometric_data$inflation_yoy, start = c(2001,2), frequency = 12)
 ```
-##Visualize data 
+## Visualize data 
+
 X axis: Time from 1M2001 to 12M2022
 Y axis: Data Percentage %
-```{r, echo = FALSE}
-#Visualize data 
+
+```{r, include = FALSE}
 
 #ts_plot(cpi_geo_y)
 #ts_plot(loc_geo_y)
 #ts_plot(gas_geo_y)
 #ts_plot(oil_geo_y)
-
 autoplot(cbind(loc_geo_y, gas_geo_y, oil_geo_y, cpi_geo_y))
-
 d <- ggplot(data = VAR_geometric_data)
-d + geom_smooth(method = lm, mapping = aes(x = oil_yoy, y = inflation_yoy)) + geom_point(mapping = aes(x = oil_yoy, y = inflation_yoy))
+```
+
+### Least squares test for individual regressions CPI ~ OIL
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & cpi\_geo\_y \\ 
+\hline \\[-1.8ex] 
+ loc\_geo\_y & 0.057$^{***}$ \\ 
+  & (0.008) \\ 
+  & \\ 
+ Constant & 0.021$^{***}$ \\ 
+  & (0.001) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Observations & 252 \\ 
+R$^{2}$ & 0.179 \\ 
+Adjusted R$^{2}$ & 0.176 \\ 
+Residual Std. Error & 0.010 (df = 250) \\ 
+F Statistic & 54.434$^{***}$ (df = 1; 250) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+
+```{r, echo=FALSE}
 OLS1 <- lm(cpi_geo_y ~ loc_geo_y)
+stargazer(OLS1, type = "html")
+d + geom_smooth(method = lm, mapping = aes(x = oil_yoy, y = inflation_yoy)) + geom_point(mapping = aes(x = oil_yoy, y = inflation_yoy))
 par(mfrow=c(2,2))
 plot(OLS1)
 
+```
+
+### Least squares test for individual regressions CPI ~ GAS
+```{r, ocho=FALSE}
 d + geom_smooth(method = lm, mapping = aes(x = gas_yoy, y = inflation_yoy)) + geom_point(mapping = aes(x = gas_yoy, y = inflation_yoy))
 OLS2 <- lm(cpi_geo_y ~ gas_geo_y)
 par(mfrow=c(2,2))
 plot(OLS2)
 
+```
+
+### Least squares test for individual regressions CPI ~ LOCAL
+```{r, echo=FALSE}
 d + geom_smooth(method = lm, mapping = aes(x = local_price_yoy, y = inflation_yoy)) + geom_point(mapping = aes(x = local_price_yoy, y = inflation_yoy))
 OLS3 <- lm(cpi_geo_y ~ oil_geo_y)
 par(mfrow=c(2,2))
 plot(OLS3)
 
+```
+
+### Least squares test for individual regressions OIL ~ GAS
+```{r, echo=FALSE}
 d + geom_smooth(method = lm, mapping = aes(x = gas_yoy, y = oil_yoy)) + geom_point(mapping = aes(x = gas_yoy, y = oil_yoy))
 OLS4 <- lm(oil_geo_y ~ gas_geo_y)
 par(mfrow=c(2,2))
 plot(OLS4)
-```
-
-
-
-Individual Ordinary Least Squares
-
-```{r pressure, echo=TRUE}
-
-
-```
-```{r}
-
-```
-```{r}
-
-```
-```{r}
-OLS4 <- lm(oil_geo_y ~ gas_geo_y)
-par(mfrow=c(2,2))
-plot(OLS4)
 
 ```
 
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
